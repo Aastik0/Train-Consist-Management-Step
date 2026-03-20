@@ -1,15 +1,16 @@
-import java.util.LinkedList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * Train Consist Management Application
  *
- * Use Case 4: Maintain Ordered Bogie IDs using LinkedList
+ * Use Case 5: Preserve Insertion Order of Bogies using LinkedHashSet
  *
  * @author Aastik
- * @version 4.0
+ * @version 5.0
  */
 
-public class TrainConsistApp {
+public class TrainConsistManagement {
 
     public static void main(String[] args) {
 
@@ -17,34 +18,20 @@ public class TrainConsistApp {
         System.out.println(" Train Consist Management App ");
         System.out.println("====================================");
 
-        // Create LinkedList for ordered consist
-        LinkedList<String> trainConsist = new LinkedList<>();
+        // LinkedHashSet maintains order + uniqueness
+        Set<String> bogieSet = new LinkedHashSet<>();
 
-        // Add bogies
-        trainConsist.add("Engine");
-        trainConsist.add("Sleeper");
-        trainConsist.add("AC");
-        trainConsist.add("Cargo");
-        trainConsist.add("Guard");
+        // Add bogies (with duplicates)
+        bogieSet.add("Engine");
+        bogieSet.add("Sleeper");
+        bogieSet.add("AC");
+        bogieSet.add("Cargo");
+        bogieSet.add("Guard");
+        bogieSet.add("AC");       // duplicate
+        bogieSet.add("Sleeper");  // duplicate
 
-        System.out.println("\nInitial Train Consist:");
-        System.out.println(trainConsist);
-
-        // Insert Pantry Car at position 2
-        trainConsist.add(2, "Pantry Car");
-
-        System.out.println("\nAfter adding Pantry Car at position 2:");
-        System.out.println(trainConsist);
-
-        // Remove first and last bogie
-        trainConsist.removeFirst();
-        trainConsist.removeLast();
-
-        System.out.println("\nAfter removing first and last bogie:");
-        System.out.println(trainConsist);
-
-        // Final consist
-        System.out.println("\nFinal Ordered Train Consist:");
-        System.out.println(trainConsist);
+        // Display bogies
+        System.out.println("\nTrain Consist (Ordered & Unique):");
+        System.out.println(bogieSet);
     }
 }
