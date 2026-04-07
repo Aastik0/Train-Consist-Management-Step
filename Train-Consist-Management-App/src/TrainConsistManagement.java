@@ -1,14 +1,13 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * Train Consist Management Application
  *
- * UC8: Filter Bogies using Stream API
+ * UC9: Group Bogies by Type using Stream API
  *
  * @author Aastik
- * @version 8.0
+ * @version 9.0
  */
 
 // Bogie class (same as UC7)
@@ -24,7 +23,7 @@ class Bogie {
 
     @Override
     public String toString() {
-        return name + " → Capacity: " + capacity;
+        return name + "(" + capacity + ")";
     }
 }
 
@@ -42,6 +41,7 @@ public class TrainConsistApp {
 
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 56));
+        bogies.add(new Bogie("Sleeper", 72));   // duplicate type
         bogies.add(new Bogie("First Class", 40));
 
         System.out.println("\nAll Bogies:");
@@ -49,14 +49,14 @@ public class TrainConsistApp {
             System.out.println(b);
         }
 
-        // ===== UC8 =====
-        List<Bogie> filteredBogies = bogies.stream()
-                .filter(b -> b.capacity > 60)
-                .collect(Collectors.toList());
+        // ===== UC9 =====
+        Map<String, List<Bogie>> groupedBogies = bogies.stream()
+                .collect(Collectors.groupingBy(b -> b.name));
 
-        System.out.println("\nFiltered Bogies (Capacity > 60):");
-        for (Bogie b : filteredBogies) {
-            System.out.println(b);
+        System.out.println("\nGrouped Bogies:");
+
+        for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
+            System.out.println(entry.getKey() + " → " + entry.getValue());
         }
     }
 }
