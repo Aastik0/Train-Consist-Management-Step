@@ -1,12 +1,13 @@
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Train Consist Management Application
  *
- * UC19: Binary Search for Bogie ID
+ * UC20: Prevent search on empty collection
  *
  * @author Aastik
- * @version 19.0
+ * @version 20.0
  */
 
 public class TrainConsistApp {
@@ -18,43 +19,34 @@ public class TrainConsistApp {
         System.out.println(" Train Consist Management App ");
         System.out.println("====================================");
 
-        // ===== UC19 =====
-        // 🔥 MUST be sorted
-        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+        // ===== UC20 =====
+        List<String> bogieIds = new ArrayList<>();
 
-        Scanner scanner = new Scanner(System.in);
+        // 🔴 No bogies added (empty list)
 
-        System.out.print("\nEnter Bogie ID to search: ");
-        String key = scanner.nextLine();
+        try {
+            searchBogie(bogieIds, "BG101");
+        } catch (IllegalStateException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 
-        int low = 0;
-        int high = bogieIds.length - 1;
-        boolean found = false;
+    // 🔥 Search method with validation
+    public static void searchBogie(List<String> bogies, String key) {
 
-        // 🔥 Binary Search
-        while (low <= high) {
+        // 🚨 Defensive check
+        if (bogies.isEmpty()) {
+            throw new IllegalStateException("Cannot perform search: Train has no bogies");
+        }
 
-            int mid = (low + high) / 2;
-
-            int result = key.compareTo(bogieIds[mid]);
-
-            if (result == 0) {
-                found = true;
-                break;
-            } else if (result > 0) {
-                low = mid + 1;   // search right
-            } else {
-                high = mid - 1;  // search left
+        // (Normal search logic - not executed if empty)
+        for (String id : bogies) {
+            if (id.equals(key)) {
+                System.out.println("Bogie Found ✅");
+                return;
             }
         }
 
-        // Result
-        if (found) {
-            System.out.println("Bogie ID FOUND ✅");
-        } else {
-            System.out.println("Bogie ID NOT FOUND ❌");
-        }
-
-        scanner.close();
+        System.out.println("Bogie Not Found ❌");
     }
 }
